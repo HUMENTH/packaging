@@ -20,7 +20,7 @@ jobs:
       matrix:
         package_target:
           - jammy-amd64
-          - nobel-amd64
+          - noble-amd64
       fail-fast: false
     steps:
       - name: configure docker
