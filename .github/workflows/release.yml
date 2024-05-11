@@ -41,6 +41,9 @@ jobs:
           - jammy-amd64
           - jammy-arm64
           - jammy-ppc64el
+          - nobel-amd64
+          - nobel-arm64
+          - nobel-ppc64el
           - raspberrypi.bookworm-armhf
           - raspberrypi.bullseye-armhf
       fail-fast: false
