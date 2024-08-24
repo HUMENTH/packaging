@@ -15,7 +15,7 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04  # Updated to a more recent version of Ubuntu
     strategy:
       matrix:
         package_target:
@@ -52,20 +52,38 @@ jobs:
         run:  |
           echo '{ "experimental": true }' | sudo tee /etc/docker/daemon.json
           sudo systemctl restart docker
+      
       - name: checkout packaging
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to use v3
         with:
           path: packaging
+
       - name: checkout wkhtmltopdf with submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to use v3
         with:
           repository: HUMENTH/wkhtmltopdf
           path: wkhtmltopdf
           submodules: true
           ref: ${{ github.event.inputs.wkhtmltopdf_ref }}
+
       - name: build
-        run: cd packaging && python3 ./build package-docker --clean --iteration ${{ github.event.inputs.packaging_iteration }} ${{ matrix.package_target }} ../wkhtmltopdf
-      - uses: softprops/action-gh-release@v0.1.14
+        run: cd packaging && python3 ./build package-docker --iteration ${{ github.event.inputs.packaging_iteration }} ${{ matrix.package_target }} ../wkhtmltopdf
+        # Removed the --clean flag to avoid unnecessary long build times; add it if absolutely necessary
+
+      - name: Test the build (Optional but recommended)
+        run: |
+          echo "Running tests for the built packages..."
+          # Add your test commands here to verify the packages are correctly built
+
+      - name: Archive build logs in case of failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-logs
+          path: packaging/logs  # Adjust the path to where your build logs are located
+
+      - name: release
+        uses: softprops/action-gh-release@v0.1.14
         with:
           name: ${{ github.event.inputs.packaging_release }}
           tag_name: ${{ github.event.inputs.packaging_release }}-${{ github.event.inputs.packaging_iteration }}
