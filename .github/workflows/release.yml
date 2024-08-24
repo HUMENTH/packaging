@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
     inputs:
       wkhtmltopdf_ref:
-        description: 'Branch/Tag to use from the wkhtmltopdf/wkhtmltopdf repository'
+        description: 'Branch/Tag to use from the HUMENTH/wkhtmltopdf repository'
         required: true
       packaging_release:
-        description: 'Release to create in wkhtmltopdf/packaging repository'
+        description: 'Release to create in HUMENTH/packaging repository'
         required: true
       packaging_iteration:
         description: 'Iteration (useful for tagged releases)'
@@ -38,7 +38,7 @@ jobs:
       - name: checkout wkhtmltopdf with submodules
         uses: actions/checkout@v2
         with:
-          repository: wkhtmltopdf/wkhtmltopdf
+          repository: HUMENTH/wkhtmltopdf
           path: wkhtmltopdf
           submodules: true
           ref: ${{ github.event.inputs.wkhtmltopdf_ref }}
@@ -52,4 +52,4 @@ jobs:
           files: "packaging/targets/wkhtmltox*.*"
           fail_on_unmatched_files: false
           draft: true
-          body: All packages were built and uploaded automatically as a part of [this run](${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}), using this [wkhtmltopdf branch/tag](https://github.com/wkhtmltopdf/wkhtmltopdf/tree/${{ github.event.inputs.wkhtmltopdf_ref }}).
+          body: All packages were built and uploaded automatically as a part of [this run](${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}), using this [wkhtmltopdf branch/tag](https://github.com/HUMENTH/wkhtmltopdf/tree/${{ github.event.inputs.wkhtmltopdf_ref }}).
