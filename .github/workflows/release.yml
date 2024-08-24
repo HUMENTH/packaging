@@ -19,12 +19,33 @@ jobs:
     strategy:
       matrix:
         package_target:
+          - almalinux8-aarch64
+          - almalinux8-ppc64le
+          - almalinux8-x86_64
+          - almalinux9-aarch64
+          - almalinux9-ppc64le
+          - almalinux9-x86_64
+          - bionic-ppc64el
+          - bookworm-amd64
+          - bookworm-arm64
+          - bookworm-i386
+          - bookworm-ppc64el
+          - buster-ppc64el
+          - bullseye-amd64
+          - bullseye-arm64
+          - bullseye-i386
+          - bullseye-ppc64el
+          - fedora37-aarch64
+          - fedora37-x86_64
+          - focal-ppc64el
           - jammy-amd64
           - jammy-arm64
           - jammy-ppc64el
           - noble-amd64
           - noble-arm64
           - noble-ppc64el
+          - raspberrypi.bookworm-armhf
+          - raspberrypi.bullseye-armhf
       fail-fast: false
     steps:
       - name: configure docker
@@ -52,4 +73,4 @@ jobs:
           files: "packaging/targets/wkhtmltox*.*"
           fail_on_unmatched_files: false
           draft: true
-          body: All packages were built and uploaded automatically as a part of [this run](${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}), using this [wkhtmltopdf branch/tag](https://github.com/HUMENTH/wkhtmltopdf/tree/${{ github.event.inputs.wkhtmltopdf_ref }}).
+          body: All packages were built and uploaded automatically as a part of [this run](${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}), using this [wkhtmltopdf branch/tag](https://github.com/wkhtmltopdf/wkhtmltopdf/tree/${{ github.event.inputs.wkhtmltopdf_ref }}).
